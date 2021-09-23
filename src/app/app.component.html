@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+    <div class="logoposition">
+        <img src='https://higialuz.com.br/images/higialuz_tecnologia_tecnologia_da_internet_bright.png' alt='Hígialuz Tecnologia' width="100">
+    </div>
+</mat-toolbar>
+
+<div class="content-wrapper">
+    
+<div class="alignplus">
+  <button (click)="newTask()" mat-button class="plusadd">
+    <mat-icon>add</mat-icon> CompromissoAdd
+  </button>
+</div>
+    
+  <div class="container-wrapper">
+    <div class="container">
+      <h2>LINHA DO TEMPO</h2>
+
+      <mat-card
+        cdkDropList
+        id="todo"
+        #todoList="cdkDropList"
+        [cdkDropListData]="todo"
+        [cdkDropListConnectedTo]="[doneList, inProgressList]"
+        (cdkDropListDropped)="drop($event)"
+        class="list">
+        <p class="empty-label" *ngIf="todo.length === 0">VAZIO</p>
+        <app-task (edit)="editTask('todo', $event)" *ngFor="let task of todo" cdkDrag [task]="task"></app-task>
+      </mat-card>
+    </div>
+
+    <div class="container">
+      <h2>EM ANDAMENTO</h2>
+
+      <mat-card
+        cdkDropList
+        id="inProgress"
+        #inProgressList="cdkDropList"
+        [cdkDropListData]="inProgress"
+        [cdkDropListConnectedTo]="[todoList, doneList]"
+        (cdkDropListDropped)="drop($event)"
+        class="list">
+        <p class="empty-label" *ngIf="inProgress.length === 0">VAZIO</p>
+        <app-task (edit)="editTask('inProgress', $event)" *ngFor="let task of inProgress" cdkDrag [task]="task"></app-task>
+      </mat-card>
+    </div>
+
+    <div class="container">
+      <h2>TAREFAS FINALIZADAS</h2>
+
+      <mat-card
+        cdkDropList
+        id="done"
+        #doneList="cdkDropList"
+        [cdkDropListData]="done"
+        [cdkDropListConnectedTo]="[todoList, inProgressList]"
+        (cdkDropListDropped)="drop($event)"
+        class="list">
+        <p class="empty-label" *ngIf="done.length === 0">VAZIO</p>
+        <app-task (edit)="editTask('done', $event)" *ngFor="let task of done" cdkDrag [task]="task"></app-task>
+      </mat-card>
+    </div>
+  </div>
+</div>
